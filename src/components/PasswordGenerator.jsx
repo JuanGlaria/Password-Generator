@@ -1,15 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './Button'
 import './PasswordGenerator.css'
 
 export const PasswordGenerator = () => {
     const [passwordLength, setPasswordLength] = useState(0)
-    // const [setAllCharacters,setAllCharacters] = useState(true)
     const [password, setPassword] = useState("")
-    const [letrasMayus, setLetraMayus] = useState(false)
+    const [letrasMayus, setLetraMayus] = useState(true)
     const [letrasMinus, setLetraMinus] = useState(false)
     const [numbers, setNumers] = useState(false)
     const [charactersEspeciales, setCharactersEspeciales] = useState(false)
+    const [copyToClipboard, setCopyToClipboard] = useState(false)
+
+
+    useEffect(() => {
+        setCopyToClipboard(false)
+        let valueRange = document.getElementById('valueRange')
+        valueRange.value = 8
+        setPasswordLength(8)
+
+    }, [])
 
     const handlePasswordChange = () => {
         let valueRange = document.getElementById('valueRange').value
@@ -47,17 +56,31 @@ export const PasswordGenerator = () => {
 
     const handleClickMayus = () => {
         setLetraMayus(prevValue => !prevValue)
+        handlePasswordChange()
     }
     const handleClickMinus = () => {
         setLetraMinus(prevValue => !prevValue)
+        handlePasswordChange()
     }
     const handleClickNumeros = () => {
         setNumers(prevValue => !prevValue)
+        handlePasswordChange()
     }
     const handleClickCharEspeciales = () => {
         setCharactersEspeciales(prevValue => !prevValue)
+        handlePasswordChange()
+    }
+    const handleResetPassword = () => {
+        handlePasswordChange()
     }
 
+    const copyToClipBoard = () => {
+        if (copyToClipboard === true) {
+            navigator.clipboard.writeText(password)
+        }
+        setCopyToClipboard(prevValue => !prevValue)
+
+    }
 
     return (
         <>
@@ -65,16 +88,20 @@ export const PasswordGenerator = () => {
                 <div className='passwordInputSection'>
                     <input type="text" value={password} readOnly />
                     <div className='passwordInputSection-btnGroup'>
-                        <Button icon='fa-solid fa-rotate-right' />
-                        <Button icon='fa-regular fa-clipboard' />
+                        <Button icon='fa-solid fa-rotate-right' click={handleResetPassword} />
+                        <Button icon='fa-regular fa-clipboard' click={copyToClipBoard} copiado={copyToClipboard} />
                     </div>
                 </div>
-                <div>
-                    <label htmlFor="longitud">Longitud</label>
-                    <label htmlFor="longitud">{passwordLength}</label>
-                    <input type="range" name="longitud" id="valueRange" list='values' min="8" max="20" step="1" onChange={handlePasswordChange} />
+                <div className='optionsSections'>
+                    <div className='optionsSections-lengthParams'>
+                        <div>
+                            <label htmlFor="longitud">Longitud</label>
+                            <label htmlFor="longitud">{passwordLength}</label>
+                        </div>
+                        <input type="range" name="longitud" id="valueRange" list='values' min="8" max="20" step="1" onChange={handlePasswordChange} />
+                    </div>
 
-                    <div>
+                    <div className='optionsSections-Characters'>
                         <Button name='A-Z' click={handleClickMayus} activo={letrasMayus} />
                         <Button name='a-z' click={handleClickMinus} activo={letrasMinus} />
                         <Button name='0-9' click={handleClickNumeros} activo={numbers} />
