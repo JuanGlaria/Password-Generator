@@ -17,7 +17,6 @@ export const PasswordGenerator = () => {
         let valueRange = document.getElementById('valueRange')
         valueRange.value = 8
         setPasswordLength(8)
-
     }, [])
 
     const handlePasswordChange = () => {
@@ -53,7 +52,7 @@ export const PasswordGenerator = () => {
         setPassword(finalPassword);
         console.log(characters)
     }
-
+    
     const handleClickMayus = () => {
         setLetraMayus(prevValue => !prevValue)
         handlePasswordChange()
@@ -75,9 +74,8 @@ export const PasswordGenerator = () => {
     }
 
     const copyToClipBoard = () => {
-        if (copyToClipboard === true) {
-            navigator.clipboard.writeText(password)
-        }
+        
+        navigator.clipboard.writeText(password)
         setCopyToClipboard(prevValue => !prevValue)
 
     }
@@ -95,7 +93,7 @@ export const PasswordGenerator = () => {
                 <div className='optionsSections'>
                     <div className='optionsSections-lengthParams'>
                         <div>
-                            <label htmlFor="longitud">Longitud</label>
+                            <label htmlFor="longitud">Longitud:</label>
                             <label htmlFor="longitud">{passwordLength}</label>
                         </div>
                         <input type="range" name="longitud" id="valueRange" list='values' min="8" max="20" step="1" onChange={handlePasswordChange} />
