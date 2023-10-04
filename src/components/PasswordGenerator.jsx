@@ -10,16 +10,15 @@ export const PasswordGenerator = () => {
     const [letrasMinus, setLetraMinus] = useState(false)
     const [numbers, setNumers] = useState(false)
     const [charactersEspeciales, setCharactersEspeciales] = useState(false)
-    const [copyToClipboard, setCopyToClipboard] = useState(false)
 
+    window.onload = function () {
+        handlePasswordChange()
+    }
 
     useEffect(() => {
-        setCopyToClipboard(false)
         let valueRange = document.getElementById('valueRange')
         valueRange.value = 8
         setPasswordLength(8)
-
-
     }, [])
 
     const handlePasswordChange = () => {
@@ -88,7 +87,6 @@ export const PasswordGenerator = () => {
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
-
         Toast.fire({
             icon: 'success',
             title: 'Copiado a Portapapeles'
@@ -102,7 +100,7 @@ export const PasswordGenerator = () => {
                     <input type="text" value={password} readOnly />
                     <div className='passwordInputSection-btnGroup'>
                         <Button icon='fa-solid fa-rotate-right' click={handleResetPassword} />
-                        <Button icon='fa-regular fa-clipboard' click={copyToClipBoard} copiado={copyToClipboard} />
+                        <Button icon='fa-regular fa-clipboard' click={copyToClipBoard} />
                     </div>
                 </div>
                 <div className='optionsSections'>
@@ -119,9 +117,6 @@ export const PasswordGenerator = () => {
                         <Button name='0-9' click={handleClickNumeros} activo={numbers} />
                         <Button name='>/=+%...' click={handleClickCharEspeciales} activo={charactersEspeciales} />
                     </div>
-                    {/* <div className='btn-generatePassword'>
-                        <Button name='Generar Contraseña' click={AllowGeneratePassword} ></Button>
-                    </div> */}
                 </div>
             </main>
         </>

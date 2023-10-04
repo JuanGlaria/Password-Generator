@@ -9,20 +9,29 @@
     padding: 0.8rem;
     text-decoration: none;
     border: 1px solid;
+    -webkit-tap-highlight-color: transparent;
 }
-.passwordInputSection-btnGroup>.btn{
+
+.passwordInputSection-btnGroup>.btn {
     border-radius: 100%;
     width: 3rem;
     height: 3rem;
-    
+
 }
 
-.optionsSections-Characters>.btn{
+.optionsSections-Characters>.btn {
     border-radius: 1rem;
 }
-.btn-generatePassword>.btn{
+
+.btn-generatePassword>.btn {
     border-radius: 2rem;
 }
-.btn:hover{
+
+.btn:hover {
     background-color: #D08500;
+}
+
+.btn:active {
+    outline: none;
+    border: none;
 }
