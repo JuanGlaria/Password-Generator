@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button } from './Button'
+import Swal from 'sweetalert2'
 import './PasswordGenerator.css'
 
 export const PasswordGenerator = () => {
@@ -10,8 +11,6 @@ export const PasswordGenerator = () => {
     const [numbers, setNumers] = useState(false)
     const [charactersEspeciales, setCharactersEspeciales] = useState(false)
     const [copyToClipboard, setCopyToClipboard] = useState(false)
-    // const [allowGeneratePassword, setAllowGeneratePassword] = useState(true)
-    const allowGeneratePassword = true
 
 
     useEffect(() => {
@@ -19,42 +18,41 @@ export const PasswordGenerator = () => {
         let valueRange = document.getElementById('valueRange')
         valueRange.value = 8
         setPasswordLength(8)
+
+
     }, [])
 
     const handlePasswordChange = () => {
-        if (allowGeneratePassword === true) {
-            let valueRange = document.getElementById('valueRange').value
-            setPasswordLength(valueRange)
-            let finalPassword = '';
-            let characters = '';
-            console.log(characters)
-            const letrasMayusValues = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-            const letrasMinusValues = 'abcdefghijklmnopqrstuvwxyz';
-            const numbersValues = '0123456789'
-            const charactersEspecialesValues = '!"#$%&/()=?¡*-+¨*[]{}_:;,.-'
-            if (letrasMayus === true) {
-                characters = characters + letrasMayusValues
-            }
-            if (letrasMinus === true) {
-                characters = characters + letrasMinusValues
-            }
-            if (numbers === true) {
-                characters = characters + numbersValues
-            }
-
-            if (charactersEspeciales === true) {
-                characters = characters + charactersEspecialesValues
-            }
-
-            const charactersLength = characters.length;
-            let contador = 0;
-            while (contador < passwordLength) {
-                finalPassword += characters.charAt(Math.floor(Math.random() * charactersLength));
-                contador += 1;
-            }
-            setPassword(finalPassword);
-            console.log(characters)
+        let valueRange = document.getElementById('valueRange').value
+        setPasswordLength(valueRange)
+        let finalPassword = '';
+        let characters = '';
+        console.log(characters)
+        const letrasMayusValues = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        const letrasMinusValues = 'abcdefghijklmnopqrstuvwxyz';
+        const numbersValues = '0123456789'
+        const charactersEspecialesValues = '!"#$%&/()=?¡*-+¨*[]{}_:;,.-'
+        if (letrasMayus === true) {
+            characters = characters + letrasMayusValues
         }
+        if (letrasMinus === true) {
+            characters = characters + letrasMinusValues
+        }
+        if (numbers === true) {
+            characters = characters + numbersValues
+        }
+
+        if (charactersEspeciales === true) {
+            characters = characters + charactersEspecialesValues
+        }
+
+        const charactersLength = characters.length;
+        let contador = 0;
+        while (contador < passwordLength) {
+            finalPassword += characters.charAt(Math.floor(Math.random() * charactersLength));
+            contador += 1;
+        }
+        setPassword(finalPassword);
     }
 
     const handleClickMayus = () => {
@@ -77,14 +75,24 @@ export const PasswordGenerator = () => {
         handlePasswordChange()
     }
 
-    const AllowGeneratePassword = () => {
-        handlePasswordChange()
-    }
-
     const copyToClipBoard = () => {
         navigator.clipboard.writeText(password)
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
-
+        Toast.fire({
+            icon: 'success',
+            title: 'Copiado a Portapapeles'
+        })
     }
 
     return (
@@ -111,9 +119,9 @@ export const PasswordGenerator = () => {
                         <Button name='0-9' click={handleClickNumeros} activo={numbers} />
                         <Button name='>/=+%...' click={handleClickCharEspeciales} activo={charactersEspeciales} />
                     </div>
-                    <div className='btn-generatePassword'>
+                    {/* <div className='btn-generatePassword'>
                         <Button name='Generar Contraseña' click={AllowGeneratePassword} ></Button>
-                    </div>
+                    </div> */}
                 </div>
             </main>
         </>

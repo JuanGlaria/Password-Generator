@@ -1,14 +1,8 @@
-/* *{
-  border: 1px solid black;
-} */
-
-
 .container{
-  height: 15rem;
+  height: 10rem;
   width: auto;
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
-  
 }
 
