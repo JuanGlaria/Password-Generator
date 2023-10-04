@@ -10,6 +10,8 @@ export const PasswordGenerator = () => {
     const [numbers, setNumers] = useState(false)
     const [charactersEspeciales, setCharactersEspeciales] = useState(false)
     const [copyToClipboard, setCopyToClipboard] = useState(false)
+    // const [allowGeneratePassword, setAllowGeneratePassword] = useState(true)
+    const allowGeneratePassword = true
 
 
     useEffect(() => {
@@ -20,39 +22,41 @@ export const PasswordGenerator = () => {
     }, [])
 
     const handlePasswordChange = () => {
-        let valueRange = document.getElementById('valueRange').value
-        setPasswordLength(valueRange)
-        let finalPassword = '';
-        let characters = '';
-        console.log(characters)
-        const letrasMayusValues = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        const letrasMinusValues = 'abcdefghijklmnopqrstuvwxyz';
-        const numbersValues = '0123456789'
-        const charactersEspecialesValues = '!"#$%&/()=?¡*-+¨*[]{}_:;,.-'
-        if (letrasMayus === true) {
-            characters = characters + letrasMayusValues
-        }
-        if (letrasMinus === true) {
-            characters = characters + letrasMinusValues
-        }
-        if (numbers === true) {
-            characters = characters + numbersValues
-        }
+        if (allowGeneratePassword === true) {
+            let valueRange = document.getElementById('valueRange').value
+            setPasswordLength(valueRange)
+            let finalPassword = '';
+            let characters = '';
+            console.log(characters)
+            const letrasMayusValues = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            const letrasMinusValues = 'abcdefghijklmnopqrstuvwxyz';
+            const numbersValues = '0123456789'
+            const charactersEspecialesValues = '!"#$%&/()=?¡*-+¨*[]{}_:;,.-'
+            if (letrasMayus === true) {
+                characters = characters + letrasMayusValues
+            }
+            if (letrasMinus === true) {
+                characters = characters + letrasMinusValues
+            }
+            if (numbers === true) {
+                characters = characters + numbersValues
+            }
 
-        if (charactersEspeciales === true) {
-            characters = characters + charactersEspecialesValues
-        }
+            if (charactersEspeciales === true) {
+                characters = characters + charactersEspecialesValues
+            }
 
-        const charactersLength = characters.length;
-        let contador = 0;
-        while (contador < passwordLength) {
-            finalPassword += characters.charAt(Math.floor(Math.random() * charactersLength));
-            contador += 1;
+            const charactersLength = characters.length;
+            let contador = 0;
+            while (contador < passwordLength) {
+                finalPassword += characters.charAt(Math.floor(Math.random() * charactersLength));
+                contador += 1;
+            }
+            setPassword(finalPassword);
+            console.log(characters)
         }
-        setPassword(finalPassword);
-        console.log(characters)
     }
-    
+
     const handleClickMayus = () => {
         setLetraMayus(prevValue => !prevValue)
         handlePasswordChange()
@@ -73,10 +77,13 @@ export const PasswordGenerator = () => {
         handlePasswordChange()
     }
 
+    const AllowGeneratePassword = () => {
+        handlePasswordChange()
+    }
+
     const copyToClipBoard = () => {
-        
         navigator.clipboard.writeText(password)
-        setCopyToClipboard(prevValue => !prevValue)
+
 
     }
 
@@ -98,12 +105,14 @@ export const PasswordGenerator = () => {
                         </div>
                         <input type="range" name="longitud" id="valueRange" list='values' min="8" max="20" step="1" onChange={handlePasswordChange} />
                     </div>
-
                     <div className='optionsSections-Characters'>
                         <Button name='A-Z' click={handleClickMayus} activo={letrasMayus} />
                         <Button name='a-z' click={handleClickMinus} activo={letrasMinus} />
                         <Button name='0-9' click={handleClickNumeros} activo={numbers} />
                         <Button name='>/=+%...' click={handleClickCharEspeciales} activo={charactersEspeciales} />
+                    </div>
+                    <div className='btn-generatePassword'>
+                        <Button name='Generar Contraseña' click={AllowGeneratePassword} ></Button>
                     </div>
                 </div>
             </main>
