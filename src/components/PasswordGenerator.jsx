@@ -14,6 +14,7 @@ export const PasswordGenerator = () => {
 
     window.onload = function () {
         handlePasswordChange()
+        setPasswordDifficulty('Weak')
     }
 
     useEffect(() => {
