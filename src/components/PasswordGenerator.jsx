@@ -9,6 +9,7 @@ export const PasswordGenerator = () => {
     const [letrasMayus, setLetraMayus] = useState(true)
     const [letrasMinus, setLetraMinus] = useState(false)
     const [numbers, setNumers] = useState(false)
+    const [passwordDifficulty, setPasswordDifficulty] = useState("")
     const [charactersEspeciales, setCharactersEspeciales] = useState(false)
 
     window.onload = function () {
@@ -26,7 +27,6 @@ export const PasswordGenerator = () => {
         setPasswordLength(valueRange)
         let finalPassword = '';
         let characters = '';
-        console.log(characters)
         const letrasMayusValues = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         const letrasMinusValues = 'abcdefghijklmnopqrstuvwxyz';
         const numbersValues = '0123456789'
@@ -51,24 +51,28 @@ export const PasswordGenerator = () => {
             finalPassword += characters.charAt(Math.floor(Math.random() * charactersLength));
             contador += 1;
         }
+
         setPassword(finalPassword);
+        if (finalPassword.length >= 8 && finalPassword.length <= 12) {
+            setPasswordDifficulty('Weak')
+        } else if (finalPassword.length < 18) {
+            setPasswordDifficulty('Good')
+        } else {
+            setPasswordDifficulty('Strong')
+        }
     }
 
     const handleClickMayus = () => {
         setLetraMayus(prevValue => !prevValue)
-        handlePasswordChange()
     }
     const handleClickMinus = () => {
         setLetraMinus(prevValue => !prevValue)
-        handlePasswordChange()
     }
     const handleClickNumeros = () => {
         setNumers(prevValue => !prevValue)
-        handlePasswordChange()
     }
     const handleClickCharEspeciales = () => {
         setCharactersEspeciales(prevValue => !prevValue)
-        handlePasswordChange()
     }
     const handleResetPassword = () => {
         handlePasswordChange()
@@ -97,7 +101,10 @@ export const PasswordGenerator = () => {
         <>
             <main className="container">
                 <div className='passwordInputSection'>
-                    <input type="text" value={password} readOnly />
+                    <div className='passwordInputSection-labelgroup'>
+                        <input type="text" value={password} readOnly />
+                        <label style={passwordDifficulty == 'Weak' ? { color: '#FF0000', border:'1px solid #FF0000' } : passwordDifficulty == 'Good' ? { color: '#00F3FF', border:'1px solid #00F3FF' } : { color: '#08FF00', border:'1px solid #08FF00'}}>{passwordDifficulty}</label>
+                    </div>
                     <div className='passwordInputSection-btnGroup'>
                         <Button icon='fa-solid fa-rotate-right' click={handleResetPassword} />
                         <Button icon='fa-regular fa-clipboard' click={copyToClipBoard} />
