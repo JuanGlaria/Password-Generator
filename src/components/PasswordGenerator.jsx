@@ -103,8 +103,8 @@ export const PasswordGenerator = () => {
             <main className="container">
                 <div className='passwordInputSection'>
                     <div className='passwordInputSection-labelgroup'>
-                        <input type="text" value={password} readOnly />
-                        <label style={passwordDifficulty == 'Weak' ? { color: '#FF0000', border:'1px solid #FF0000' } : passwordDifficulty == 'Good' ? { color: '#00F3FF', border:'1px solid #00F3FF' } : { color: '#08FF00', border:'1px solid #08FF00'}}>{passwordDifficulty}</label>
+                        <input type="text" id='finalPassword' value={password} readOnly />
+                        <label htmlFor='finalPassword' style={passwordDifficulty == 'Weak' ? { color: '#FF0000', border:'1px solid #FF0000' } : passwordDifficulty == 'Good' ? { color: '#00F3FF', border:'1px solid #00F3FF' } : { color: '#08FF00', border:'1px solid #08FF00'}}>{passwordDifficulty}</label>
                     </div>
                     <div className='passwordInputSection-btnGroup'>
                         <Button icon='fa-solid fa-rotate-right' click={handleResetPassword} />
@@ -114,8 +114,8 @@ export const PasswordGenerator = () => {
                 <div className='optionsSections'>
                     <div className='optionsSections-lengthParams'>
                         <div>
-                            <label htmlFor="longitud">Longitud:</label>
-                            <label htmlFor="longitud">{passwordLength}</label>
+                            <label htmlFor="valueRange">Longitud:</label>
+                            <label htmlFor="valueRange">{passwordLength}</label>
                         </div>
                         <input type="range" name="longitud" id="valueRange" list='values' min="8" max="20" step="1" onChange={handlePasswordChange} />
                     </div>
